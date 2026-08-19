@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Recruiter Dashboard | CIPTS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=DM+Serif+Display&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#ffffff",
+                      "on-secondary-fixed-variant": "#284c57",
+                      "on-primary-fixed": "#0f0069",
+                      "on-background": "#1a1c1f",
+                      "primary-fixed": "#e2dfff",
+                      "primary-container": "#4f46e5",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#f3f3f7",
+                      "on-surface-variant": "#464555",
+                      "tertiary-container": "#646055",
+                      "secondary": "#40636f",
+                      "outline": "#777587",
+                      "inverse-on-surface": "#f0f0f4",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#ccc6b8",
+                      "surface-variant": "#e2e2e6",
+                      "background": "#f9f9fd",
+                      "secondary-container": "#c3e8f7",
+                      "error-container": "#ffdad6",
+                      "inverse-surface": "#2f3034",
+                      "primary-fixed-dim": "#c3c0ff",
+                      "primary": "#3525cd",
+                      "on-tertiary-container": "#e1dbcc",
+                      "surface-container-high": "#e8e8ec",
+                      "surface-container-highest": "#e2e2e6",
+                      "on-error-container": "#93000a",
+                      "surface-dim": "#d9dade",
+                      "on-secondary-container": "#466976",
+                      "on-surface": "#1a1c1f",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed": "#e8e2d3",
+                      "surface": "#f9f9fd",
+                      "surface-tint": "#4d44e3",
+                      "on-error": "#ffffff",
+                      "inverse-primary": "#c3c0ff",
+                      "tertiary": "#4c483e",
+                      "secondary-fixed-dim": "#a8ccda",
+                      "outline-variant": "#c7c4d8",
+                      "on-secondary-fixed": "#001f27",
+                      "on-primary-container": "#dad7ff",
+                      "on-tertiary-fixed": "#1e1c13",
+                      "on-primary-fixed-variant": "#3323cc",
+                      "secondary-fixed": "#c3e8f7",
+                      "surface-bright": "#f9f9fd",
+                      "surface-container": "#ededf2",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed-variant": "#4a473c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "container-max": "1280px",
+                      "margin-mobile": "20px",
+                      "stack-lg": "32px",
+                      "gutter": "24px",
+                      "section-gap": "120px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "DM Serif Display"
+                      ],
+                      "label-sm": [
+                              "Manrope"
+                      ],
+                      "display-md": [
+                              "DM Serif Display"
+                      ],
+                      "label-md": [
+                              "Manrope"
+                      ],
+                      "body-md": [
+                              "Manrope"
+                      ],
+                      "title-lg": [
+                              "Manrope"
+                      ],
+                      "body-lg": [
+                              "Manrope"
+                      ],
+                      "headline-lg-mobile": [
+                              "DM Serif Display"
+                      ],
+                      "headline-lg": [
+                              "DM Serif Display"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-md": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "title-lg": [
+                              "22px",
+                              {
+                                      "lineHeight": "30px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(23, 25, 28, 0.1);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.05);
+        }
+        .btn-primary {
+            background-color: theme('colors.primary');
+            color: theme('colors.on-primary');
+            border-radius: theme('borderRadius.full');
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid theme('colors.primary');
+            color: theme('colors.primary');
+            border-radius: theme('borderRadius.full');
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(0.98);
+        }
+        .chip {
+            background-color: theme('colors.secondary-container');
+            color: theme('colors.on-secondary-container');
+            border-radius: theme('borderRadius.full');
+            padding: 4px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .reveal-anim {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-anim.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-xl rounded-full mt-6 mx-auto w-fit px-8 py-3 sticky top-0 z-50 border border-white/20 dark:border-outline/10 shadow-[0_20_40px_rgba(79,70,229,0.05)] hidden md:block">
+<div class="flex items-center gap-stack-lg max-w-container-max mx-auto">
+<a class="font-display-md text-title-lg tracking-tight text-primary dark:text-primary-fixed hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" href="#">
+                CIPTS
+            </a>
+<div class="flex gap-gutter items-center">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" data-nav="Home" href="#">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" data-nav="Opportunities" href="#">Opportunities</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" data-nav="Students" href="#">Students</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" data-nav="Recruiters" href="#">Recruiters</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" data-nav="About" href="#">About</a>
+</div>
+<div class="flex gap-stack-md items-center ml-auto">
+<button class="font-label-md text-label-md hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200">Log In</button>
+<button class="btn-primary px-6 py-2 font-label-md text-label-md">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Header Section -->
+<section class="w-full max-w-container-max mb-section-gap reveal-anim">
+<div class="flex flex-col md:flex-row justify-between items-end gap-stack-lg">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary mb-stack-sm">Recruitment command center</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Manage your active pipeline, review incoming candidates, and orchestrate interview schedules across all ongoing drives.</p>
+</div>
+<div class="flex gap-stack-md">
+<button class="btn-secondary px-6 py-3 font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 0;">add</span>
+                        New Posting
+                    </button>
+</div>
+</div>
+</section>
+<!-- Metrics Grid -->
+<section class="w-full max-w-container-max grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-section-gap">
+<div class="glass-card rounded-xl p-8 flex flex-col gap-stack-sm reveal-anim" style="transition-delay: 0.1s;">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-md text-label-md uppercase tracking-wider">Active Postings</span>
+<span class="material-symbols-outlined text-primary" data-icon="work" style="font-variation-settings: 'FILL' 1;">work</span>
+</div>
+<span class="font-display-md text-display-md text-on-background">12</span>
+<div class="flex items-center gap-2 text-primary text-sm font-label-sm">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span>+2 this week</span>
+</div>
+</div>
+<div class="glass-card rounded-xl p-8 flex flex-col gap-stack-sm reveal-anim" style="transition-delay: 0.2s;">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-md text-label-md uppercase tracking-wider">Candidates Received</span>
+<span class="material-symbols-outlined text-primary" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<span class="font-display-md text-display-md text-on-background">487</span>
+<div class="flex items-center gap-2 text-primary text-sm font-label-sm">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+<span>+45 today</span>
+</div>
+</div>
+<div class="glass-card rounded-xl p-8 flex flex-col gap-stack-sm reveal-anim" style="transition-delay: 0.3s;">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-md text-label-md uppercase tracking-wider">Interview Pipeline</span>
+<span class="material-symbols-outlined text-primary" data-icon="forum" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+<span class="font-display-md text-display-md text-on-background">64</span>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm font-label-sm">
+<span>18 scheduled this week</span>
+</div>
+</div>
+<div class="glass-card rounded-xl p-8 flex flex-col gap-stack-sm reveal-anim" style="transition-delay: 0.4s;">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-md text-label-md uppercase tracking-wider">Confirmed Selections</span>
+<span class="material-symbols-outlined text-primary" data-icon="task_alt" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<span class="font-display-md text-display-md text-on-background">24</span>
+<div class="flex items-center gap-2 text-on-surface-variant text-sm font-label-sm">
+<span>Across 3 active drives</span>
+</div>
+</div>
+</section>
+<!-- Main Content Area: Bento Layout -->
+<section class="w-full max-w-container-max grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-section-gap">
+<!-- Active Recruitment Drives (Spans 2 columns) -->
+<div class="lg:col-span-2 glass-card rounded-xl p-8 flex flex-col gap-stack-md reveal-anim">
+<div class="flex justify-between items-center mb-stack-sm border-b border-outline-variant/30 pb-4">
+<h2 class="font-headline-lg text-headline-lg text-primary">Active Recruitment Drives</h2>
+<button class="font-label-md text-label-md text-primary hover:underline">View All</button>
+</div>
+<div class="flex flex-col gap-stack-md">
+<!-- Drive Item 1 -->
+<div class="flex flex-col md:flex-row gap-gutter justify-between items-start md:items-center p-4 hover:bg-surface-variant/20 rounded-lg transition-colors border border-transparent hover:border-outline-variant/20">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="business_center">business_center</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-background">Software Engineering Cohort 2024</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Tech &amp; Product Division</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-4 items-center">
+<span class="chip font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]" data-icon="radio_button_checked">radio_button_checked</span> Active</span>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-background">145 Candidates</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Phase: Technical Screening</p>
+</div>
+<button class="material-symbols-outlined text-primary hover:text-primary-fixed-variant transition-colors" data-icon="chevron_right">chevron_right</button>
+</div>
+</div>
+<!-- Drive Item 2 -->
+<div class="flex flex-col md:flex-row gap-gutter justify-between items-start md:items-center p-4 hover:bg-surface-variant/20 rounded-lg transition-colors border border-transparent hover:border-outline-variant/20">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-background">Data Analytics Summer Internship</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Analytics Division</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-4 items-center">
+<span class="chip font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed"><span class="material-symbols-outlined text-[16px]" data-icon="pending_actions">pending_actions</span> Sourcing</span>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-background">82 Candidates</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Phase: Initial Review</p>
+</div>
+<button class="material-symbols-outlined text-primary hover:text-primary-fixed-variant transition-colors" data-icon="chevron_right">chevron_right</button>
+</div>
+</div>
+<!-- Drive Item 3 -->
+<div class="flex flex-col md:flex-row gap-gutter justify-between items-start md:items-center p-4 hover:bg-surface-variant/20 rounded-lg transition-colors border border-transparent hover:border-outline-variant/20">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-background">Marketing Associate Program</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Brand &amp; Communications</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-4 items-center">
+<span class="chip font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]" data-icon="radio_button_checked">radio_button_checked</span> Active</span>
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-background">210 Candidates</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Phase: Final Interviews</p>
+</div>
+<button class="material-symbols-outlined text-primary hover:text-primary-fixed-variant transition-colors" data-icon="chevron_right">chevron_right</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Deadline Alerts (Spans 1 column) -->
+<div class="glass-card rounded-xl p-8 flex flex-col gap-stack-md bg-surface-bright/90 reveal-anim" style="transition-delay: 0.2s;">
+<div class="flex justify-between items-center mb-stack-sm border-b border-outline-variant/30 pb-4">
+<h2 class="font-title-lg text-title-lg text-error flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+                        Action Required
+                    </h2>
+</div>
+<div class="flex flex-col gap-stack-sm overflow-y-auto max-h-[400px] pr-2">
+<!-- Alert 1 -->
+<div class="p-4 rounded-lg bg-error-container/20 border border-error/20 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-error uppercase tracking-wider">Due Today</span>
+<span class="material-symbols-outlined text-error text-sm" data-icon="timer">timer</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-background">Finalize Interview Panel</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Software Eng Cohort 2024</p>
+<button class="font-label-sm text-label-sm text-primary text-left mt-2 hover:underline">Review Panelists</button>
+</div>
+<!-- Alert 2 -->
+<div class="p-4 rounded-lg bg-surface-variant/30 border border-outline-variant/30 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Tomorrow</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="event">event</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-background">Approve Offer Letters</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Marketing Associate Program (3 pending)</p>
+<button class="font-label-sm text-label-sm text-primary text-left mt-2 hover:underline">Review Offers</button>
+</div>
+<!-- Alert 3 -->
+<div class="p-4 rounded-lg bg-surface-variant/30 border border-outline-variant/30 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">In 3 Days</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="event">event</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-background">Publish Analytics JD</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Data Analytics Fall Internship</p>
+<button class="font-label-sm text-label-sm text-primary text-left mt-2 hover:underline">Edit Draft</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface dark:bg-surface-container-lowest w-full pt-section-gap pb-stack-lg border-t border-outline-variant/30">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="md:col-span-1 flex flex-col gap-stack-md">
+<span class="font-display-md text-headline-lg text-primary dark:text-primary-fixed">CIPTS</span>
+<p class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed opacity-80">© 2024 CIPTS Institutional. All rights reserved.</p>
+</div>
+<div class="md:col-span-3 flex flex-wrap justify-end gap-gutter font-body-md text-body-md">
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Campus Map</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Contact Support</a>
+<a class="text-primary font-semibold hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Recruiter Portal</a>
+</div>
+</div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        document.querySelectorAll('.reveal-anim').forEach((el) => {
+            observer.observe(el);
+        });
+    });
+</script>
+</body></html>

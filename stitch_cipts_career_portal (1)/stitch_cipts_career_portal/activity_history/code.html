@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CIPTS - Student History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&amp;family=DM+Serif+Display&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#a8ccda",
+                        "primary": "#3525cd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4a473c",
+                        "inverse-surface": "#2f3034",
+                        "inverse-primary": "#c3c0ff",
+                        "secondary": "#40636f",
+                        "surface-container-highest": "#e2e2e6",
+                        "outline": "#777587",
+                        "on-secondary-fixed": "#001f27",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c7c4d8",
+                        "background": "#f9f9fd",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#4c483e",
+                        "on-secondary-container": "#466976",
+                        "surface-variant": "#e2e2e6",
+                        "on-tertiary-container": "#e1dbcc",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f9f9fd",
+                        "surface-container": "#ededf2",
+                        "tertiary-container": "#646055",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#e8e2d3",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#4d44e3",
+                        "on-background": "#1a1c1f",
+                        "primary-fixed": "#e2dfff",
+                        "primary-container": "#4f46e5",
+                        "on-surface": "#1a1c1f",
+                        "surface-container-high": "#e8e8ec",
+                        "surface-container-low": "#f3f3f7",
+                        "surface": "#f9f9fd",
+                        "on-surface-variant": "#464555",
+                        "on-primary-fixed": "#0f0069",
+                        "inverse-on-surface": "#f0f0f4",
+                        "secondary-fixed": "#c3e8f7",
+                        "on-primary-container": "#dad7ff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#1e1c13",
+                        "tertiary-fixed-dim": "#ccc6b8",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#c3e8f7",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "surface-dim": "#d9dade",
+                        "on-secondary-fixed-variant": "#284c57"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "stack-md": "16px",
+                        "section-gap": "120px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "margin-desktop": "64px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Manrope"],
+                        "label-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "display-md": ["DM Serif Display"],
+                        "display-lg": ["DM Serif Display"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg": ["DM Serif Display"],
+                        "headline-lg-mobile": ["DM Serif Display"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["22px", { "lineHeight": "30px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-md": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background: linear-gradient(135deg, #FFF8E9 0%, #D8EEF4 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(79, 70, 229, 0.15);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.05);
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md antialiased pt-[100px]">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-3 max-w-container-max mx-auto bg-white/60 dark:bg-surface-container-low/60 backdrop-blur-xl rounded-full mt-4 mx-margin-desktop border border-on-surface/10 dark:border-on-primary-container/15 shadow-2xl shadow-primary/5">
+<div class="flex items-center gap-4">
+<span class="font-display-md text-display-md font-bold tracking-tight text-primary dark:text-inverse-primary">CIPTS</span>
+</div>
+<div class="hidden md:flex items-center gap-8 font-body-md text-body-md">
+<a class="text-on-surface-variant dark:text-on-surface-variant/80 hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/80 hover:text-primary transition-colors" href="#">Opportunities</a>
+<a class="text-primary font-semibold border-b-2 border-primary pb-1" href="#">Students</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/80 hover:text-primary transition-colors" href="#">Recruiters</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/80 hover:text-primary transition-colors" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 bg-primary-container text-on-primary rounded-full hover:bg-primary/5 dark:hover:bg-primary-container/20 transition-all duration-300 font-label-md text-label-md">Sign In</button>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<!-- Header Section -->
+<div class="mb-16 md:w-2/3">
+<h1 class="font-display-lg text-display-lg text-primary mb-4">Activity Log</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">A chronological record of your placement journey, application milestones, and professional updates.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Timeline Container -->
+<div class="lg:col-span-8 space-y-8 relative before:absolute before:inset-0 before:ml-8 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-primary/20">
+<!-- Event 1 -->
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+<!-- Icon -->
+<div class="flex items-center justify-center w-16 h-16 rounded-full glass-panel border-primary shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_20px_rgba(79,70,229,0.2)] z-10 bg-white">
+<span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">event_available</span>
+</div>
+<!-- Content Card -->
+<div class="w-[calc(100%-5rem)] md:w-[calc(50%-4rem)] glass-panel rounded-2xl p-6 hover:shadow-[0_20px_40px_rgba(79,70,229,0.1)] transition-shadow duration-300">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Today, 2:30 PM</span>
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm rounded-full">Interview</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-2 text-on-surface">Interview Scheduled</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Your first-round technical interview with Global Data Inc. has been confirmed. Check your email for meeting details.</p>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+<div class="flex items-center justify-center w-16 h-16 rounded-full glass-panel shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 bg-white">
+<span class="material-symbols-outlined text-secondary text-[28px]" style="font-variation-settings: 'FILL' 0;">verified_user</span>
+</div>
+<div class="w-[calc(100%-5rem)] md:w-[calc(50%-4rem)] glass-panel rounded-2xl p-6">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Yesterday, 10:15 AM</span>
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm rounded-full">Profile</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-2 text-on-surface">Profile Verified</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">The Placement Office has reviewed and verified your academic credentials and standard profile information.</p>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+<div class="flex items-center justify-center w-16 h-16 rounded-full glass-panel shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 bg-white">
+<span class="material-symbols-outlined text-secondary text-[28px]" style="font-variation-settings: 'FILL' 0;">description</span>
+</div>
+<div class="w-[calc(100%-5rem)] md:w-[calc(50%-4rem)] glass-panel rounded-2xl p-6">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Oct 24, 4:00 PM</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm rounded-full">Document</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-2 text-on-surface">Updated Resume</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">You uploaded a new version of your resume: 'J_Doe_Resume_V3_Tech.pdf'.</p>
+</div>
+</div>
+<!-- Event 4 -->
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+<div class="flex items-center justify-center w-16 h-16 rounded-full glass-panel shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 bg-white">
+<span class="material-symbols-outlined text-secondary text-[28px]" style="font-variation-settings: 'FILL' 0;">send</span>
+</div>
+<div class="w-[calc(100%-5rem)] md:w-[calc(50%-4rem)] glass-panel rounded-2xl p-6">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Oct 20, 9:00 AM</span>
+<span class="px-3 py-1 bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm rounded-full">Application</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-2 text-on-surface">Applied to TechFlow</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Successfully submitted application for the Software Intern role at TechFlow.</p>
+</div>
+</div>
+</div>
+<!-- Sidebar / Callout -->
+<div class="lg:col-span-4 mt-16 lg:mt-0">
+<div class="glass-panel rounded-3xl p-8 sticky top-32">
+<h4 class="font-headline-lg text-headline-lg text-primary mb-6">Career Insights</h4>
+<div class="w-full h-48 rounded-2xl overflow-hidden mb-6 relative">
+<img class="w-full h-full object-cover" data-alt="A softly lit, candid editorial photograph of a diverse group of university students collaborating in a modern, glass-walled campus study room. They are looking at a laptop with focused, optimistic expressions. The scene is bathed in bright, natural daylight typical of a premium university campus, conveying a sense of academic ambition and modern professional preparation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6l66hf7k9q6nURQr5-ptUt77ddoFgBzBQTMmHr94E3qB8mAEy39-ywXMMINzuvz03WsiZUgz6BkGUyNgBj_2BcceJ1OazRYsQwbaoiPQ4QgRAIM7kReMn-QZI52layzNgk9klXoMams75_ryfgfm07HjmGpUVFiCxFU3MNcR2n9nXjQRioKKr03CxnlrIXbTvtU1LkPW8r1PiSLz16aXG9ncBXTBCWxaBbD1Lve0Bj7YV9hPzkoJx6Q"/>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Students who actively update their profiles and apply early see a 40% increase in interview requests. Keep the momentum going.</p>
+<button class="w-full py-4 bg-white/20 border border-primary/20 text-primary font-label-md text-label-md rounded-full hover:bg-white/40 transition-colors">Browse New Opportunities</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-desktop py-stack-lg flex flex-col md:flex-row justify-between items-start gap-stack-lg bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant/30 mt-section-gap">
+<div>
+<span class="font-display-md text-display-md text-primary block mb-4">CIPTS</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 CIPTS Institutional Excellence. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap gap-6 font-body-md text-body-md">
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Student Portal</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Recruiter Portal</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Career Insights</a>
+<a class="text-on-surface-variant dark:text-on-secondary-fixed-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Contact Support</a>
+</div>
+</footer>
+</body></html>

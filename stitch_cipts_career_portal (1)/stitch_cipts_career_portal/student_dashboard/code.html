@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CIPTS - Student Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Manrope:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#284c57",
+                        "on-primary-fixed": "#0f0069",
+                        "on-background": "#1a1c1f",
+                        "primary-fixed": "#e2dfff",
+                        "primary-container": "#4f46e5",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f3f3f7",
+                        "on-surface-variant": "#464555",
+                        "tertiary-container": "#646055",
+                        "secondary": "#40636f",
+                        "outline": "#777587",
+                        "inverse-on-surface": "#f0f0f4",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ccc6b8",
+                        "surface-variant": "#e2e2e6",
+                        "background": "#f9f9fd",
+                        "secondary-container": "#c3e8f7",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2f3034",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "primary": "#3525cd",
+                        "on-tertiary-container": "#e1dbcc",
+                        "surface-container-high": "#e8e8ec",
+                        "surface-container-highest": "#e2e2e6",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d9dade",
+                        "on-secondary-container": "#466976",
+                        "on-surface": "#1a1c1f",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#e8e2d3",
+                        "surface": "#f9f9fd",
+                        "surface-tint": "#4d44e3",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#c3c0ff",
+                        "tertiary": "#4c483e",
+                        "secondary-fixed-dim": "#a8ccda",
+                        "outline-variant": "#c7c4d8",
+                        "on-secondary-fixed": "#001f27",
+                        "on-primary-container": "#dad7ff",
+                        "on-tertiary-fixed": "#1e1c13",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "secondary-fixed": "#c3e8f7",
+                        "surface-bright": "#f9f9fd",
+                        "surface-container": "#ededf2",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4a473c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "stack-lg": "32px",
+                        "gutter": "24px",
+                        "section-gap": "120px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["DM Serif Display"],
+                        "label-sm": ["Manrope"],
+                        "display-md": ["DM Serif Display"],
+                        "label-md": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "title-lg": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-lg-mobile": ["DM Serif Display"],
+                        "headline-lg": ["DM Serif Display"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-md": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "30px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(79, 70, 229, 0.15);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.05);
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: opacity, transform;
+        }
+        
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#FFF8E9] to-[#D8EEF4] min-h-screen text-on-background font-body-md text-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-xl rounded-full mt-6 mx-auto w-fit px-8 py-3 sticky top-0 z-50 border border-white/20 dark:border-outline/10 shadow-sm shadow-[0_20_40px_rgba(79,70,229,0.05)]">
+<div class="flex items-center gap-stack-lg max-w-container-max mx-auto">
+<span class="font-display-md text-title-lg tracking-tight text-primary dark:text-primary-fixed">CIPTS</span>
+<div class="hidden md:flex items-center gap-gutter font-label-md text-label-md">
+<a class="text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" href="#">Opportunities</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary scale-95 transition-transform duration-200" href="#">Students</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" href="#">Recruiters</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors duration-300 scale-95 transition-transform duration-200" href="#">About</a>
+</div>
+<div class="flex items-center gap-stack-sm">
+<button class="font-label-md text-label-md px-4 py-2 text-primary hover:bg-surface-variant rounded-full transition-colors">Log In</button>
+<button class="font-label-md text-label-md px-6 py-2 bg-primary-container text-on-primary rounded-full hover:opacity-90 transition-opacity">Get Started</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-section-gap pb-section-gap">
+<!-- Header Section -->
+<header class="mb-section-gap flex justify-between items-end animate-on-scroll">
+<div>
+<h1 class="font-display-md text-display-md text-on-background mb-4">Good morning, Alex.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Your placement journey at a glance.</p>
+</div>
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-surface-container-lowest shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A bright, high-key editorial portrait of a confident young university student looking warmly at the camera in a sunlit modern campus setting. The lighting is soft and natural, emphasizing a premium, optimistic mood with airy whites and soft pastel tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXbfY62LZQLEulSFeFsooUPmYrSEvojmtj1osEV9dXx5aXyvzooPTDico_1edlsFfNw31_am8UtDCBOpKOPE9OEbqHiLH4BIM7PoBeRUR1oQ5zrSLX5fAjQBE1mjDTAz2bhaARZgvjTzc-uIbaVvwTPId8XWueTL6Ir9kYufvTeLnVj-x7PzBCmwDs6GHKyJfttRQMRf5zcwC9lSHP_8sHvMwyHa-AS0TbNHZBr7Rjc1gdZDHrXHjH2w"/>
+</div>
+</header>
+<!-- Metrics Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-section-gap">
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between animate-on-scroll" style="transition-delay: 0.1s;">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">GPA</span>
+<span class="font-display-md text-display-md text-primary">3.85</span>
+</div>
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between animate-on-scroll" style="transition-delay: 0.2s;">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Placement Status</span>
+<div class="mt-2 w-fit bg-secondary-container/50 px-4 py-2 rounded-full border border-primary/10">
+<span class="font-title-lg text-title-lg text-on-secondary-container">Interviewing</span>
+</div>
+</div>
+<div class="glass-card rounded-xl p-8 flex flex-col justify-between animate-on-scroll" style="transition-delay: 0.3s;">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Profile Completion</span>
+<div class="flex items-end gap-4 mt-2">
+<span class="font-display-md text-display-md text-primary">85%</span>
+<div class="h-2 flex-grow bg-surface-variant rounded-full mb-3 overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pipeline and Interviews Bento -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-section-gap">
+<!-- Pipeline -->
+<div class="lg:col-span-2 glass-card rounded-xl p-10 animate-on-scroll" style="transition-delay: 0.1s;">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-stack-lg">Application Pipeline</h2>
+<div class="relative flex justify-between items-center mt-12 mb-8 before:content-[''] before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:right-0 before:h-[2px] before:bg-outline-variant/30 before:-z-10">
+<!-- Step 1 -->
+<div class="flex flex-col items-center bg-surface-container-lowest px-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-primary-container mb-3 border border-primary/10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Applied</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center bg-surface-container-lowest px-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-primary-container mb-3 border border-primary/10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Shortlisted</span>
+</div>
+<!-- Step 3 Active -->
+<div class="flex flex-col items-center bg-surface-container-lowest px-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary mb-3 shadow-[0_0_20px_rgba(79,70,229,0.3)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+</div>
+<span class="font-label-md text-label-md text-primary-container font-bold">Interviewing</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center bg-surface-container-lowest px-4">
+<div class="w-10 h-10 rounded-full bg-surface/50 border border-outline-variant flex items-center justify-center text-outline mb-3">
+<span class="material-symbols-outlined">handshake</span>
+</div>
+<span class="font-label-md text-label-md text-outline">Offer</span>
+</div>
+</div>
+</div>
+<!-- Upcoming Interviews -->
+<div class="lg:col-span-1 glass-card rounded-xl p-10 flex flex-col animate-on-scroll" style="transition-delay: 0.2s;">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-stack-lg">Upcoming</h2>
+<div class="flex flex-col gap-4 flex-grow">
+<div class="p-4 rounded-lg bg-surface/50 border border-outline-variant/30 flex gap-4 items-start hover:bg-surface transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded bg-[#F7F0DE] flex items-center justify-center text-primary shrink-0">
+<span class="font-title-lg text-title-lg">T</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-on-background mb-1">TechFlow Corp</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Final Round • Tomorrow, 10 AM</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full pt-section-gap pb-stack-lg border-t border-outline-variant/30 bg-surface dark:bg-surface-container-lowest flat no shadows">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter text-secondary dark:text-secondary-fixed">
+<div class="col-span-1 md:col-span-4 mb-stack-lg">
+<span class="font-display-md text-headline-lg text-primary dark:text-primary-fixed">CIPTS</span>
+</div>
+<div class="font-body-md text-body-md flex flex-col gap-4">
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Terms of Service</a>
+</div>
+<div class="font-body-md text-body-md flex flex-col gap-4">
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Campus Map</a>
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Contact Support</a>
+</div>
+<div class="font-body-md text-body-md flex flex-col gap-4">
+<a class="text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity" href="#">Recruiter Portal</a>
+</div>
+<div class="col-span-1 md:col-span-4 mt-stack-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 CIPTS Institutional. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
+</body></html>
