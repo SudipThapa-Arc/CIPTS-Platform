@@ -7,6 +7,7 @@ import { login } from "@/app/actions/auth";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'STUDENT' | 'RECRUITER' | 'OFFICER'>('STUDENT');
 
   async function handleSubmit(formData: FormData) {
     const result = await login(formData);
@@ -54,11 +55,11 @@ export default function LoginPage() {
             )}
 
             <form action={handleSubmit} className="flex flex-col gap-6">
-              {/* Role Selector Mock - Auth handles true role routing */}
+              {/* Role Selector Mock - Auth handles true role routing, this is purely aesthetic/UX */}
               <div className="flex gap-2 p-1 bg-surface-container rounded-lg mb-4">
-                <button type="button" className="flex-1 bg-white shadow-sm rounded-md py-2 font-sans text-sm font-semibold text-primary transition-all">Student</button>
-                <button type="button" className="flex-1 text-on-surface-variant py-2 font-sans text-sm font-semibold hover:text-primary transition-all">Recruiter</button>
-                <button type="button" className="flex-1 text-on-surface-variant py-2 font-sans text-sm font-semibold hover:text-primary transition-all">Officer</button>
+                <button type="button" onClick={() => setActiveTab('STUDENT')} className={`flex-1 rounded-md py-2 font-sans text-sm font-semibold transition-all ${activeTab === 'STUDENT' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-primary'}`}>Student</button>
+                <button type="button" onClick={() => setActiveTab('RECRUITER')} className={`flex-1 rounded-md py-2 font-sans text-sm font-semibold transition-all ${activeTab === 'RECRUITER' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-primary'}`}>Recruiter</button>
+                <button type="button" onClick={() => setActiveTab('OFFICER')} className={`flex-1 rounded-md py-2 font-sans text-sm font-semibold transition-all ${activeTab === 'OFFICER' ? 'bg-white shadow-sm text-primary' : 'text-on-surface-variant hover:text-primary'}`}>Officer</button>
               </div>
 
               <div>
