@@ -2,33 +2,77 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-surface dark:bg-surface-container-lowest w-full pt-section-gap pb-stack-lg border-t border-outline-variant/30 mt-auto">
-      <div className="max-w-[1280px] mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-6 font-sans text-base text-secondary dark:text-secondary-fixed reveal-on-scroll">
-        {/* Brand Column */}
-        <div className="col-span-1 md:col-span-1">
-          <h3 className="font-display text-3xl text-primary dark:text-primary-fixed mb-4">CIPTS</h3>
-          <p className="font-sans text-sm text-on-surface-variant opacity-80 hover:opacity-100 transition-opacity">
+    <footer className="bg-surface w-full pt-16 pb-10 border-t border-outline-variant/30 mt-auto">
+      <div className="max-w-[1280px] mx-auto px-5 md:px-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+          {/* Brand Column */}
+          <div className="col-span-1 md:col-span-2">
+            <Link href="/" className="font-display text-3xl text-primary block mb-3">
+              CIPTS
+            </Link>
+            <p className="font-sans text-sm text-on-surface-variant max-w-xs leading-relaxed">
+              An airy, intuitive ecosystem connecting visionary students with premier
+              opportunities, transforming the recruitment lifecycle into a seamless journey.
+            </p>
+          </div>
+
+          {/* Portals Column */}
+          <div>
+            <h3 className="font-sans text-xs font-bold text-on-surface uppercase tracking-widest mb-4">
+              Portals
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {[
+                { label: "Student Dashboard", href: "/student/dashboard" },
+                { label: "Browse Jobs", href: "/student/jobs" },
+                { label: "Recruiter Portal", href: "/recruiter/dashboard" },
+                { label: "Officer View", href: "/officer/dashboard" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="font-sans text-sm text-on-surface-variant hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Account Column */}
+          <div>
+            <h3 className="font-sans text-xs font-bold text-on-surface uppercase tracking-widest mb-4">
+              Account
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {[
+                { label: "Sign In", href: "/auth/login" },
+                { label: "Create Account", href: "/auth/register" },
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Terms of Service", href: "/terms" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="font-sans text-sm text-on-surface-variant hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-outline-variant/30 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="font-sans text-xs text-on-surface-variant">
             © {new Date().getFullYear()} CIPTS Institutional. All rights reserved.
           </p>
-        </div>
-        
-        {/* Links Column */}
-        <div className="col-span-1 md:col-span-3 flex flex-wrap gap-8 md:justify-end items-center">
-          <Link href="/privacy" className="font-sans text-sm text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 transition-all opacity-80 hover:opacity-100">
-            Privacy Policy
-          </Link>
-          <Link href="/terms" className="font-sans text-sm text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 transition-all opacity-80 hover:opacity-100">
-            Terms of Service
-          </Link>
-          <Link href="/map" className="font-sans text-sm text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 transition-all opacity-80 hover:opacity-100">
-            Campus Map
-          </Link>
-          <Link href="/support" className="font-sans text-sm text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 transition-all opacity-80 hover:opacity-100">
-            Contact Support
-          </Link>
-          <Link href="/recruiter/dashboard" className="font-sans text-sm text-on-surface-variant hover:text-primary underline decoration-primary/30 underline-offset-4 transition-all opacity-80 hover:opacity-100">
-            Recruiter Portal
-          </Link>
+          <p className="font-sans text-xs text-on-surface-variant">
+            Built with care for students & recruiters.
+          </p>
         </div>
       </div>
     </footer>

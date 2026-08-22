@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import ApplicantsClient from './ApplicantsClient';
 
-export default async function ApplicantsPage({ params }: { params: { id: string } }) {
+export default async function ApplicantsPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
+  const resolvedParams = await Promise.resolve(params);
   const supabase = await createClient();
   const { data: authData } = await supabase.auth.getUser();
 
@@ -26,7 +27,7 @@ export default async function ApplicantsPage({ params }: { params: { id: string 
   const { data: job, error: jobError } = await supabase
     .from('jobs')
     .select('role_title, status')
-    .eq('job_id', params.id)
+    .eq('job_id', resolvedParams.id)
     .eq('recruiter_id', recruiter.recruiter_id)
     .single();
 
@@ -51,7 +52,7 @@ export default async function ApplicantsPage({ params }: { params: { id: string 
         skills
       )
     `)
-    .eq('job_id', params.id)
+    .eq('job_id', resolvedParams.id)
     .order('applied_date', { ascending: true });
 
   if (appsError) {
@@ -77,7 +78,7 @@ export default async function ApplicantsPage({ params }: { params: { id: string 
         </div>
       </div>
 
-      <ApplicantsClient applications={applications || []} jobId={params.id} />
+      <ApplicantsClient applications={applications || []} jobId={resolvedParams.id} />
 
     </div>
   );

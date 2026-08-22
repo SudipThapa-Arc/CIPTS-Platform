@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Footer from "@/components/navigation/Footer";
+import TopNavBar from "@/components/navigation/TopNavBar";
 import { useRouter } from "next/navigation";
 
 export default function TermsOfServicePage() {
@@ -9,7 +10,8 @@ export default function TermsOfServicePage() {
 
   return (
     <>
-      <main className="flex-grow flex flex-col items-center justify-start pt-24 pb-section-gap px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto relative z-10">
+      <TopNavBar />
+      <main className="flex-grow flex flex-col items-center justify-start pt-8 md:pt-16 pb-section-gap px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto relative z-10">
         
         {/* Background Gradient Overlay */}
         <div className="fixed inset-0 pointer-events-none -z-10" style={{ background: "radial-gradient(at 0% 0%, rgba(216, 238, 244, 0.4) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(216, 238, 244, 0.4) 0px, transparent 50%)" }}></div>

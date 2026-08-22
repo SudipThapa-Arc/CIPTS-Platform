@@ -50,7 +50,7 @@ export async function register(formData: FormData) {
   
   const companyName = formData.get('companyName') as string
   const industrySector = formData.get('industrySector') as string
-  const contactPhone = formData.get('contactPhone') as string
+  const contactPerson = formData.get('contactPerson') as string
   const companyWebsite = formData.get('companyWebsite') as string
 
   if (!email || !password || !role) {
@@ -99,7 +99,7 @@ export async function register(formData: FormData) {
       user_id: authData.user.id,
       company_name: companyName,
       industry_sector: industrySector,
-      contact_phone: contactPhone,
+      contact_phone: contactPerson, // Using contact_phone to match Supabase schema types
       company_website: companyWebsite
     })
     

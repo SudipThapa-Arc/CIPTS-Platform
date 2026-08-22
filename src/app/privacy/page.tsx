@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Footer from "@/components/navigation/Footer";
+import TopNavBar from "@/components/navigation/TopNavBar";
 
 export default function PrivacyPolicyPage() {
   const [activeSection, setActiveSection] = useState("information-collection");
@@ -37,7 +38,8 @@ export default function PrivacyPolicyPage() {
 
   return (
     <>
-      <main className="flex-grow pt-section-gap pb-section-gap px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto relative z-10">
+      <TopNavBar />
+      <main className="flex-grow pt-8 md:pt-16 pb-section-gap px-margin-mobile md:px-margin-desktop w-full max-w-container-max mx-auto relative z-10">
         
         {/* Header Section */}
         <header className="mb-24 md:w-3/4 lg:w-2/3">

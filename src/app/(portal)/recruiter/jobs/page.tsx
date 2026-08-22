@@ -88,7 +88,7 @@ export default async function RecruiterJobsPage() {
                   <div className="space-y-3 mb-6 flex-grow">
                     <div className="flex justify-between text-sm">
                       <span className="text-on-surface-variant flex items-center gap-1.5"><Users className="w-4 h-4"/> Applicants</span>
-                      <span className="font-semibold text-primary">{job.applications[0].count}</span>
+                      <span className="font-semibold text-primary">{(job.applications as any[])?.[0]?.count ?? 0}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-on-surface-variant flex items-center gap-1.5"><Clock className="w-4 h-4"/> Deadline</span>

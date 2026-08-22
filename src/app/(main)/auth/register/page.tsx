@@ -117,13 +117,25 @@ export default function RegisterPage() {
                 </>
               ) : (
                 <>
-                  <div>
-                    <label className="block font-sans text-sm font-semibold text-on-surface mb-2">Company Name</label>
-                    <input type="text" name="companyName" required placeholder="Acme Corp" className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-sans text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
+                  <div className="flex gap-4">
+                    <div className="flex-1">
+                      <label className="block font-sans text-sm font-semibold text-on-surface mb-2">Company Name</label>
+                      <input type="text" name="companyName" required placeholder="Acme Corp" className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-sans text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block font-sans text-sm font-semibold text-on-surface mb-2">Industry Sector</label>
+                      <input type="text" name="industrySector" required placeholder="Software" className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-sans text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
+                    </div>
                   </div>
-                  <div>
-                    <label className="block font-sans text-sm font-semibold text-on-surface mb-2">Industry Sector</label>
-                    <input type="text" name="industrySector" required placeholder="Software" className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-sans text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
+                  <div className="flex gap-4">
+                    <div className="flex-1">
+                      <label className="block font-sans text-sm font-semibold text-on-surface mb-2">Contact Person</label>
+                      <input type="text" name="contactPerson" required placeholder="Jane Doe" className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-sans text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block font-sans text-sm font-semibold text-on-surface mb-2">Company Website</label>
+                      <input type="url" name="companyWebsite" placeholder="https://acme.com" className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 font-sans text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
+                    </div>
                   </div>
                 </>
               )}

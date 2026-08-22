@@ -6,17 +6,29 @@
   
   --color-primary: #3525cd;
   --color-primary-container: #4f46e5;
+  --color-primary-fixed: #3525cd;
+  --color-primary-fixed-dim: #6c63ff;
   --color-on-primary: #ffffff;
   --color-on-primary-container: #dad7ff;
   
   --color-secondary: #40636f;
   --color-secondary-container: #c3e8f7;
+  --color-secondary-fixed: #c3e8f7;
   --color-on-secondary: #ffffff;
   --color-on-secondary-container: #466976;
+  --color-on-secondary-fixed: #001f26;
+  
+  --color-tertiary: #8b5cf6;
+  --color-tertiary-container: #ede9fe;
+  --color-tertiary-fixed: #ede9fe;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #4c1d95;
+  --color-on-tertiary-fixed: #4c1d95;
   
   --color-surface: #f9f9fd;
   --color-surface-dim: #d9dade;
   --color-surface-bright: #f9f9fd;
+  --color-surface-variant: #e8e8ec;
   
   --color-surface-container-lowest: #ffffff;
   --color-surface-container-low: #f3f3f7;
@@ -26,6 +38,7 @@
   
   --color-on-surface: #1a1c1f;
   --color-on-surface-variant: #464555;
+  --color-on-background: #1a1c1f;
   --color-outline: #777587;
   --color-outline-variant: #c7c4d8;
 
@@ -55,14 +68,29 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-on-surface font-sans antialiased selection:bg-primary-container selection:text-on-primary-container;
+    scrollbar-width: thin;
+    scrollbar-color: #c7c4d8 transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #c7c4d8;
+    border-radius: 3px;
   }
 }
 
 @layer utilities {
   .glass-panel {
-    @apply bg-surface-container-lowest/70 backdrop-blur-xl border border-primary/10 shadow-[0_20_40px_rgba(79,70,229,0.05)];
+    @apply bg-surface-container-lowest/70 backdrop-blur-xl border border-primary/10 shadow-[0_20px_40px_rgba(79,70,229,0.05)];
   }
   .reveal-on-scroll {
     opacity: 0;
@@ -75,6 +103,12 @@
   .reveal-on-scroll.is-revealed {
     opacity: 1;
     transform: translateY(0);
+  }
+  .portal-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl font-sans text-sm font-semibold text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all duration-200;
+  }
+  .portal-link-active {
+    @apply text-primary bg-primary/10;
   }
 }
 

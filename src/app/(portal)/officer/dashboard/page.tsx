@@ -46,7 +46,7 @@ export default function OfficerDashboardPage() {
         labels: {
           usePointStyle: true,
           boxWidth: 8,
-          font: { family: "'Manrope', sans-serif", size: 12, weight: 'bold' as const }
+          font: { family: "Manrope, sans-serif", size: 12, weight: 'bold' as const }
         }
       },
       tooltip: {
@@ -58,8 +58,8 @@ export default function OfficerDashboardPage() {
         padding: 12,
         boxPadding: 6,
         usePointStyle: true,
-        titleFont: { family: "'Manrope', sans-serif", size: 14, weight: 'bold' as const },
-        bodyFont: { family: "'Manrope', sans-serif", size: 13 }
+        titleFont: { family: "Manrope, sans-serif", size: 14, weight: 'bold' as const },
+        bodyFont: { family: "Manrope, sans-serif", size: 13 }
       }
     },
     scales: {
@@ -150,7 +150,7 @@ export default function OfficerDashboardPage() {
             </div>
             <div className="flex items-baseline gap-2">
               <span className="font-display text-5xl text-primary">88%</span>
-              <span className="font-sans text-xs font-bold text-secondary bg-secondary-container/30 px-2 py-1 rounded-full">+4% YoY</span>
+              <span className="font-sans text-xs font-bold text-secondary bg-secondary-container px-2 py-1 rounded-full">+4% YoY</span>
             </div>
           </div>
           <div className="mt-8">
@@ -295,9 +295,9 @@ export default function OfficerDashboardPage() {
             {/* Offers */}
             <motion.div whileHover={{ scale: 1.02 }} className="relative z-10 w-[70%] mx-auto group cursor-pointer">
               <div className="absolute -top-6 left-1/2 w-[1px] h-6 bg-outline-variant"></div>
-              <div className="w-full bg-primary-fixed-dim/50 rounded-lg p-4 transition-all hover:shadow-md border border-white/40 flex justify-between items-center">
-                <span className="font-sans text-sm font-semibold text-on-background">Offers Extended</span>
-                <span className="font-sans text-[22px] font-semibold text-primary-container">1,600</span>
+              <div className="w-full bg-primary-container/20 rounded-lg p-4 transition-all hover:shadow-md border border-white/40 flex justify-between items-center">
+                <span className="font-sans text-sm font-semibold text-on-surface">Offers Extended</span>
+                <span className="font-sans text-[22px] font-semibold text-primary">1,600</span>
               </div>
             </motion.div>
 

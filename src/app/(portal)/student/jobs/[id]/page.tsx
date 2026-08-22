@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { ArrowLeft, Building2, MapPin, DollarSign, Clock, CheckCircle, GraduationCap } from 'lucide-react';
 import ApplyButton from './ApplyButton';
 
-export default async function JobDetailsPage({ params }: { params: { id: string } }) {
+export default async function JobDetailsPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
+  const resolvedParams = await Promise.resolve(params);
   const supabase = await createClient();
   const { data: authData } = await supabase.auth.getUser();
 
@@ -23,7 +24,7 @@ export default async function JobDetailsPage({ params }: { params: { id: string 
         company_website
       )
     `)
-    .eq('job_id', params.id)
+    .eq('job_id', resolvedParams.id)
     .single();
 
   if (jobError || !job) {

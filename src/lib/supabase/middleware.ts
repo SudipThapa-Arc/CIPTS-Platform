@@ -57,7 +57,7 @@ export async function updateSession(request: NextRequest) {
 
   // Public routes that do not require authentication
   const isAuthRoute = pathname.startsWith('/auth')
-  const isPublicRoute = pathname === '/' || isAuthRoute
+  const isPublicRoute = pathname === '/' || pathname.startsWith('/privacy') || pathname.startsWith('/terms') || isAuthRoute
 
   // Redirect unauthenticated users
   if (!user && !isPublicRoute) {
@@ -78,11 +78,17 @@ export async function updateSession(request: NextRequest) {
 
     const url = request.nextUrl.clone()
     
-    if (profile?.role === 'STUDENT') {
+    if (!profile) {
+      // If they have an auth session but no profile, let them stay on auth pages
+      // so they can log out or re-register properly.
+      return supabaseResponse
+    }
+    
+    if (profile.role === 'STUDENT') {
       url.pathname = '/student/dashboard'
-    } else if (profile?.role === 'RECRUITER') {
+    } else if (profile.role === 'RECRUITER') {
       url.pathname = '/recruiter/dashboard'
-    } else if (profile?.role === 'OFFICER') {
+    } else if (profile.role === 'OFFICER') {
       url.pathname = '/officer/dashboard'
     } else {
       url.pathname = '/student/dashboard' // fallback
@@ -99,21 +105,23 @@ export async function updateSession(request: NextRequest) {
       .eq('id', user.id)
       .single()
       
+    const safeRole = profile?.role?.toLowerCase() || 'auth/login';
+    
     if (pathname.startsWith('/student') && profile?.role !== 'STUDENT') {
       const url = request.nextUrl.clone()
-      url.pathname = `/${profile?.role.toLowerCase()}/dashboard`
+      url.pathname = `/${safeRole === 'auth/login' ? 'auth/login' : safeRole + '/dashboard'}`
       return NextResponse.redirect(url)
     }
     
     if (pathname.startsWith('/recruiter') && profile?.role !== 'RECRUITER') {
       const url = request.nextUrl.clone()
-      url.pathname = `/${profile?.role.toLowerCase()}/dashboard`
+      url.pathname = `/${safeRole === 'auth/login' ? 'auth/login' : safeRole + '/dashboard'}`
       return NextResponse.redirect(url)
     }
     
     if (pathname.startsWith('/officer') && profile?.role !== 'OFFICER') {
       const url = request.nextUrl.clone()
-      url.pathname = `/${profile?.role.toLowerCase()}/dashboard`
+      url.pathname = `/${safeRole === 'auth/login' ? 'auth/login' : safeRole + '/dashboard'}`
       return NextResponse.redirect(url)
     }
   }
