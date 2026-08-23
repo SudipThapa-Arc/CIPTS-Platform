@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Chart as ChartJS,
@@ -124,10 +125,13 @@ export default function OfficerDashboardPage() {
           </p>
         </div>
         <div className="flex gap-4">
-          <button className="glass-panel text-primary font-sans text-sm font-semibold py-3 px-6 rounded-full hover:bg-white/90 transition-all flex items-center gap-2">
+          <Link 
+            href="/officer/reports"
+            className="glass-panel text-primary font-sans text-sm font-semibold py-3 px-6 rounded-full hover:bg-white/90 active:scale-95 transition-all flex items-center gap-2 shadow-sm"
+          >
             <span className="material-symbols-outlined text-[18px]">download</span>
             Export Report
-          </button>
+          </Link>
         </div>
       </motion.section>
 
@@ -251,9 +255,9 @@ export default function OfficerDashboardPage() {
               <h2 className="font-sans text-[22px] font-semibold text-on-background">Department Placement Comparison</h2>
               <p className="font-sans text-base text-on-surface-variant">Breakdown of offers across major faculties.</p>
             </div>
-            <button className="text-primary hover:bg-surface-variant/50 p-2 rounded-full transition-colors">
-              <span className="material-symbols-outlined">more_vert</span>
-            </button>
+            <Link href="/officer/analytics" title="View Full Analytics" className="text-primary hover:bg-surface-variant/50 p-2 rounded-full transition-all active:scale-90 flex items-center justify-center">
+              <span className="material-symbols-outlined">analytics</span>
+            </Link>
           </div>
           <div className="relative h-80 w-full">
             <Bar data={chartData} options={chartOptions} />

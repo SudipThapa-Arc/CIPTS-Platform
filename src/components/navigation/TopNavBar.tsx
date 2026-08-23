@@ -67,13 +67,13 @@ export default function TopNavBar() {
           <div className="hidden md:flex items-center gap-3 shrink-0">
             <Link
               href="/auth/login"
-              className="font-sans text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors px-4 py-2"
+              className="font-sans text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors px-4 py-2 rounded-full hover:bg-primary/5 active:scale-95"
             >
               Log In
             </Link>
             <Link
               href="/auth/register"
-              className="bg-primary text-on-primary font-sans text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-primary/90 active:scale-95 transition-all duration-200 shadow-sm"
+              className="bg-primary text-on-primary font-sans text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-primary/90 active:scale-95 hover:shadow-md transition-all duration-200 shadow-sm"
             >
               Get Started
             </Link>

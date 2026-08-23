@@ -7,6 +7,34 @@ export async function updateSession(request: NextRequest) {
     request,
   })
 
+  const pathname = request.nextUrl.pathname
+
+  // Public routes that do not require authentication
+  const isAuthRoute = pathname.startsWith('/auth')
+  const isPublicRoute = pathname === '/' || pathname.startsWith('/privacy') || pathname.startsWith('/terms') || isAuthRoute
+
+  // Fast-path cookie check: If there are no Supabase auth cookies, skip remote network calls
+  const allCookies = request.cookies.getAll()
+  const hasAuthCookie = allCookies.some(c => c.name.includes('sb-') && c.name.includes('-auth-token'))
+
+  // 1. Unauthenticated user on protected route -> Fast redirect to login (0ms DB delay)
+  if (!hasAuthCookie && !isPublicRoute) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/auth/login'
+    return NextResponse.redirect(url)
+  }
+
+  // 2. Unauthenticated user on public non-auth route -> Fast pass-through (0ms DB delay)
+  if (!hasAuthCookie && isPublicRoute && !isAuthRoute) {
+    return supabaseResponse
+  }
+
+  // 3. Unauthenticated user on /auth/login or /auth/register -> Fast pass-through (0ms DB delay)
+  if (!hasAuthCookie && isAuthRoute) {
+    return supabaseResponse
+  }
+
+  // User has session cookie: Initialize Supabase client and verify session
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -53,13 +81,7 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const pathname = request.nextUrl.pathname
-
-  // Public routes that do not require authentication
-  const isAuthRoute = pathname.startsWith('/auth')
-  const isPublicRoute = pathname === '/' || pathname.startsWith('/privacy') || pathname.startsWith('/terms') || isAuthRoute
-
-  // Redirect unauthenticated users
+  // Redirect unauthenticated users on protected routes
   if (!user && !isPublicRoute) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
@@ -68,8 +90,6 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect authenticated users away from auth pages
   if (user && isAuthRoute) {
-    // We should figure out their role to redirect them properly
-    // Let's query the profiles table for their role
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
@@ -79,8 +99,6 @@ export async function updateSession(request: NextRequest) {
     const url = request.nextUrl.clone()
     
     if (!profile) {
-      // If they have an auth session but no profile, let them stay on auth pages
-      // so they can log out or re-register properly.
       return supabaseResponse
     }
     
@@ -91,13 +109,13 @@ export async function updateSession(request: NextRequest) {
     } else if (profile.role === 'OFFICER') {
       url.pathname = '/officer/dashboard'
     } else {
-      url.pathname = '/student/dashboard' // fallback
+      url.pathname = '/student/dashboard'
     }
     
     return NextResponse.redirect(url)
   }
 
-  // RBAC checks for authenticated routes
+  // RBAC checks for authenticated portal routes
   if (user && !isPublicRoute) {
     const { data: profile } = await supabase
       .from('profiles')

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { updateApplicationStatus } from '@/app/actions/recruiterJobs';
-import { Search, User, Filter, ChevronRight, X, ExternalLink, ShieldCheck, Mail } from 'lucide-react';
+import { Search, Filter, ChevronRight, X, ExternalLink, ShieldCheck, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type Student = {
@@ -30,13 +30,25 @@ export default function ApplicantsClient({
   jobId: string 
 }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('ALL');
+  const [showFilters, setShowFilters] = useState(false);
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  const filteredApps = applications.filter(app => 
-    app.students.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    app.students.roll_number.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const filteredApps = applications.filter(app => {
+    const matchesSearch = 
+      app.students.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      app.students.roll_number.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'ALL' || app.app_status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   // Status counters for the funnel
   const stats = {
@@ -49,11 +61,21 @@ export default function ApplicantsClient({
   const handleStatusUpdate = async (newStatus: "INTERVIEWING" | "PENDING" | "SHORTLISTED" | "REJECTED" | "SELECTED") => {
     if (!selectedApp || isUpdating) return;
     setIsUpdating(true);
-    await updateApplicationStatus(selectedApp.app_id, newStatus, jobId);
     
     // Optimistic local update
+    const previousStatus = selectedApp.app_status;
     selectedApp.app_status = newStatus;
     setSelectedApp({ ...selectedApp });
+
+    const result = await updateApplicationStatus(selectedApp.app_id, newStatus, jobId);
+    
+    if (result?.error) {
+      selectedApp.app_status = previousStatus;
+      setSelectedApp({ ...selectedApp });
+      showToast(`Error: ${result.error}`);
+    } else {
+      showToast(`Candidate status updated to ${newStatus}`);
+    }
     
     setIsUpdating(false);
   };
@@ -71,6 +93,21 @@ export default function ApplicantsClient({
   return (
     <div className="space-y-8 animate-in fade-in">
       
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="fixed top-6 right-6 z-50 bg-primary text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2 font-sans text-sm font-semibold border border-white/20 backdrop-blur-xl"
+          >
+            <Check className="w-4 h-4 text-emerald-300" />
+            {toastMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Funnel Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
@@ -87,21 +124,61 @@ export default function ApplicantsClient({
       </div>
 
       {/* Toolbar */}
-      <div className="bg-surface p-4 rounded-2xl flex flex-col md:flex-row gap-4 border border-outline-variant shadow-sm">
+      <div className="bg-surface glass-panel p-4 rounded-3xl flex flex-col md:flex-row gap-4 border border-outline-variant/50 shadow-sm">
         <div className="relative flex-grow">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-on-surface-variant" />
           <input
             type="text"
-            placeholder="Search by name or roll number..."
+            placeholder="Search candidate by name or roll number..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-2.5 bg-surface-container/50 rounded-xl border border-outline-variant focus:border-primary outline-none font-sans text-sm"
+            className="w-full pl-12 pr-4 py-3 bg-surface-container/50 rounded-2xl border border-outline-variant focus:border-primary outline-none font-sans text-sm"
           />
         </div>
-        <button className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-surface border border-outline-variant text-on-surface hover:border-primary/50 transition-all font-sans text-sm font-semibold">
-          <Filter className="w-4 h-4" /> Filters
+        <button 
+          onClick={() => setShowFilters(!showFilters)}
+          className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all font-sans text-sm font-semibold cursor-pointer active:scale-95 ${
+            statusFilter !== 'ALL' || showFilters
+              ? 'bg-primary/10 border-primary/40 text-primary'
+              : 'bg-surface border-outline-variant text-on-surface hover:border-primary/50'
+          }`}
+        >
+          <Filter className="w-4 h-4" />
+          Filter Status
+          {statusFilter !== 'ALL' && (
+            <span className="w-2 h-2 rounded-full bg-primary" />
+          )}
         </button>
       </div>
+
+      {/* Expandable Filter Drawer */}
+      <AnimatePresence>
+        {showFilters && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="bg-surface glass-panel p-6 rounded-3xl border border-outline-variant/40 shadow-sm flex flex-wrap gap-2 items-center">
+              <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant mr-2">Filter By Stage:</span>
+              {['ALL', 'PENDING', 'SHORTLISTED', 'INTERVIEWING', 'SELECTED', 'REJECTED'].map((st) => (
+                <button
+                  key={st}
+                  onClick={() => setStatusFilter(st)}
+                  className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    statusFilter === st
+                      ? 'bg-primary text-white shadow-sm'
+                      : 'bg-surface-container/60 text-on-surface-variant hover:border-primary/30 border border-outline-variant/40'
+                  }`}
+                >
+                  {st === 'ALL' ? 'All Stages' : st}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Table Area */}
       <div className="bg-surface rounded-3xl border border-outline-variant shadow-sm overflow-hidden">
@@ -120,19 +197,23 @@ export default function ApplicantsClient({
               {filteredApps.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center text-on-surface-variant">
-                    No candidates found.
+                    No candidates match the current filter.
                   </td>
                 </tr>
               ) : (
                 filteredApps.map((app) => (
-                  <tr key={app.app_id} className="hover:bg-surface-container/20 transition-colors group cursor-pointer" onClick={() => setSelectedApp(app)}>
+                  <tr 
+                    key={app.app_id} 
+                    className="hover:bg-surface-container/20 transition-colors group cursor-pointer" 
+                    onClick={() => setSelectedApp(app)}
+                  >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">
                           {app.students.full_name.charAt(0)}
                         </div>
                         <div>
-                          <div className="font-semibold text-on-surface">{app.students.full_name}</div>
+                          <div className="font-semibold text-on-surface group-hover:text-primary transition-colors">{app.students.full_name}</div>
                           <div className="font-mono text-xs text-on-surface-variant">{app.students.roll_number}</div>
                         </div>
                       </div>
@@ -141,11 +222,11 @@ export default function ApplicantsClient({
                     <td className="px-6 py-4 font-mono font-semibold text-on-surface">{app.students.gpa.toFixed(2)}</td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-bold border uppercase tracking-wider ${getStatusColor(app.app_status)}`}>
-                        {app.app_status}
+                        {app.app_status || 'PENDING'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button className="p-2 text-on-surface-variant hover:text-primary transition-colors">
+                      <button className="p-2 text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">
                         <ChevronRight className="w-5 h-5" />
                       </button>
                     </td>
@@ -177,7 +258,7 @@ export default function ApplicantsClient({
             >
               <div className="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container/30">
                 <h3 className="font-display text-xl text-on-surface">Candidate Profile</h3>
-                <button onClick={() => setSelectedApp(null)} className="p-2 bg-surface border border-outline-variant rounded-full hover:bg-surface-container transition-colors">
+                <button onClick={() => setSelectedApp(null)} className="p-2 bg-surface border border-outline-variant rounded-full hover:bg-surface-container transition-colors cursor-pointer">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -235,34 +316,34 @@ export default function ApplicantsClient({
 
               {/* Action Buttons */}
               <div className="p-6 border-t border-outline-variant bg-surface flex flex-col gap-3">
-                <span className="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Update Status</span>
+                <span className="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1">Update Candidate Stage</span>
                 
                 <div className="grid grid-cols-2 gap-3">
                   <button 
                     onClick={() => handleStatusUpdate('SHORTLISTED')}
                     disabled={isUpdating || selectedApp.app_status === 'SHORTLISTED'}
-                    className="py-3 rounded-lg border border-primary/30 text-primary font-semibold text-sm hover:bg-primary hover:text-white transition-all disabled:opacity-50"
+                    className="py-3 rounded-xl border border-primary/30 text-primary font-semibold text-sm hover:bg-primary hover:text-white transition-all disabled:opacity-50 active:scale-95 cursor-pointer"
                   >
                     Shortlist
                   </button>
                   <button 
                     onClick={() => handleStatusUpdate('INTERVIEWING')}
                     disabled={isUpdating || selectedApp.app_status === 'INTERVIEWING'}
-                    className="py-3 rounded-lg border border-amber-300 text-amber-700 bg-amber-50 hover:bg-amber-500 hover:text-white font-semibold text-sm transition-all disabled:opacity-50"
+                    className="py-3 rounded-xl border border-amber-300 text-amber-700 bg-amber-50 hover:bg-amber-500 hover:text-white font-semibold text-sm transition-all disabled:opacity-50 active:scale-95 cursor-pointer"
                   >
                     Interview
                   </button>
                   <button 
                     onClick={() => handleStatusUpdate('SELECTED')}
                     disabled={isUpdating || selectedApp.app_status === 'SELECTED'}
-                    className="py-3 rounded-lg border border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-600 hover:text-white font-semibold text-sm transition-all disabled:opacity-50 col-span-2"
+                    className="py-3 rounded-xl border border-emerald-300 text-emerald-700 bg-emerald-50 hover:bg-emerald-600 hover:text-white font-semibold text-sm transition-all disabled:opacity-50 col-span-2 active:scale-95 cursor-pointer shadow-sm"
                   >
-                    Mark as Selected
+                    Mark as Selected (Offer Extended)
                   </button>
                   <button 
                     onClick={() => handleStatusUpdate('REJECTED')}
                     disabled={isUpdating || selectedApp.app_status === 'REJECTED'}
-                    className="py-3 rounded-lg border border-red-200 text-red-700 bg-red-50 hover:bg-red-500 hover:text-white font-semibold text-sm transition-all disabled:opacity-50 col-span-2"
+                    className="py-3 rounded-xl border border-red-200 text-red-700 bg-red-50 hover:bg-red-500 hover:text-white font-semibold text-sm transition-all disabled:opacity-50 col-span-2 active:scale-95 cursor-pointer"
                   >
                     Reject Candidate
                   </button>

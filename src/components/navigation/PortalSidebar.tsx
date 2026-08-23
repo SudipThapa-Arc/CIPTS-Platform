@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { logout } from "@/app/actions/auth";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NavItem {
   label: string;
@@ -38,9 +39,9 @@ const navConfig: Record<string, NavItem[]> = {
 };
 
 const roleColors: Record<string, string> = {
-  student: "text-primary bg-primary/10",
-  recruiter: "text-secondary bg-secondary-container/50",
-  officer: "text-tertiary bg-tertiary-container/50",
+  student: "text-primary bg-primary/10 border border-primary/20",
+  recruiter: "text-secondary bg-secondary-container/50 border border-secondary/20",
+  officer: "text-tertiary bg-tertiary-container/50 border border-tertiary/20",
 };
 
 const roleLabels: Record<string, string> = {
@@ -52,43 +53,57 @@ const roleLabels: Record<string, string> = {
 export default function PortalSidebar({ role, userName, userEmail }: PortalSidebarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isPendingLogout, startLogoutTransition] = useTransition();
   const navItems = navConfig[role] || [];
+
+  const handleLogout = (e: React.FormEvent) => {
+    e.preventDefault();
+    startLogoutTransition(async () => {
+      await logout();
+    });
+  };
 
   const SidebarContent = () => (
     <>
       {/* Brand + Role Badge */}
       <div className="p-6 border-b border-outline-variant/20">
-        <Link href="/" className="font-display text-xl text-primary block mb-2 hover:opacity-80 transition-opacity">
+        <Link 
+          href="/" 
+          className="font-display text-2xl text-primary block mb-2 hover:opacity-80 transition-opacity active:scale-98"
+        >
           CIPTS
         </Link>
-        <span className={`inline-block font-sans text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${roleColors[role]}`}>
+        <span className={`inline-block font-sans text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full ${roleColors[role]}`}>
           {roleLabels[role]}
         </span>
       </div>
 
       {/* Nav Links */}
-      <nav className="flex-1 p-4 overflow-y-auto">
-        <ul className="flex flex-col gap-1">
+      <nav className="flex-1 p-4 overflow-y-auto space-y-1">
+        <ul className="flex flex-col gap-1.5">
           {navItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+            const isActive = pathname === item.href || (item.href !== `/${role}/dashboard` && pathname.startsWith(item.href));
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl font-sans text-sm font-semibold transition-all duration-200 ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl font-sans text-sm font-semibold transition-all duration-200 active:scale-95 ${
                     isActive
-                      ? "text-primary bg-primary/10"
-                      : "text-on-surface-variant hover:text-primary hover:bg-primary/5"
+                      ? "text-primary bg-primary/10 shadow-sm border border-primary/15 font-bold"
+                      : "text-on-surface-variant hover:text-primary hover:bg-primary/5 hover:translate-x-1"
                   }`}
                 >
                   <span
-                    className="material-symbols-outlined text-[20px]"
+                    className={`material-symbols-outlined text-[20px] transition-transform ${isActive ? "scale-110" : ""}`}
                     style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
                   >
                     {item.icon}
                   </span>
                   {item.label}
+                  {isActive && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  )}
                 </Link>
               </li>
             );
@@ -97,24 +112,37 @@ export default function PortalSidebar({ role, userName, userEmail }: PortalSideb
       </nav>
 
       {/* User + Logout */}
-      <div className="p-4 border-t border-outline-variant/20">
+      <div className="p-4 border-t border-outline-variant/20 space-y-3">
         {(userName || userEmail) && (
-          <div className="px-4 py-3 mb-2 rounded-xl bg-surface-container/50">
+          <div className="px-4 py-3 rounded-xl bg-surface-container/50 border border-outline-variant/20">
             {userName && (
-              <p className="font-sans text-sm font-semibold text-on-surface truncate">{userName}</p>
+              <p className="font-sans text-sm font-bold text-on-surface truncate">{userName}</p>
             )}
             {userEmail && (
-              <p className="font-sans text-xs text-on-surface-variant truncate">{userEmail}</p>
+              <p className="font-sans text-xs text-on-surface-variant truncate font-mono mt-0.5">{userEmail}</p>
             )}
           </div>
         )}
-        <form action={logout}>
+        <form onSubmit={handleLogout}>
           <button
             type="submit"
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-sans text-sm font-semibold text-on-surface-variant hover:text-error hover:bg-error-container/30 transition-all duration-200"
+            disabled={isPendingLogout}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl font-sans text-sm font-semibold text-on-surface-variant hover:text-error hover:bg-error-container/20 border border-transparent hover:border-error/20 transition-all duration-200 active:scale-95 disabled:opacity-60 cursor-pointer"
           >
-            <span className="material-symbols-outlined text-[20px]">logout</span>
-            Sign Out
+            {isPendingLogout ? (
+              <>
+                <svg className="animate-spin w-4 h-4 text-error" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                <span className="text-error font-medium">Signing Out...</span>
+              </>
+            ) : (
+              <>
+                <span className="material-symbols-outlined text-[20px]">logout</span>
+                Sign Out
+              </>
+            )}
           </button>
         </form>
       </div>
@@ -124,22 +152,22 @@ export default function PortalSidebar({ role, userName, userEmail }: PortalSideb
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 shrink-0 min-h-screen bg-surface border-r border-outline-variant/30 sticky top-0 self-start h-screen">
+      <aside className="hidden lg:flex flex-col w-64 shrink-0 min-h-screen bg-surface/90 backdrop-blur-xl border-r border-outline-variant/30 sticky top-0 self-start h-screen z-30">
         <SidebarContent />
       </aside>
 
       {/* Mobile Top Bar */}
-      <div className="lg:hidden sticky top-0 z-40 bg-surface/95 backdrop-blur-xl border-b border-outline-variant/30 px-4 py-3 flex items-center justify-between">
+      <div className="lg:hidden sticky top-0 z-40 bg-surface/95 backdrop-blur-xl border-b border-outline-variant/30 px-4 py-3 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-3">
-          <Link href="/" className="font-display text-lg text-primary">CIPTS</Link>
-          <span className={`font-sans text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${roleColors[role]}`}>
+          <Link href="/" className="font-display text-xl text-primary active:scale-95 transition-transform">CIPTS</Link>
+          <span className={`font-sans text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${roleColors[role]}`}>
             {role}
           </span>
         </div>
         <button
           onClick={() => setMobileOpen((v) => !v)}
           aria-label="Toggle menu"
-          className="w-9 h-9 flex flex-col justify-center items-center gap-[5px] rounded-lg hover:bg-primary/5"
+          className="w-10 h-10 flex flex-col justify-center items-center gap-[5px] rounded-xl hover:bg-primary/5 active:scale-90 transition-all cursor-pointer"
         >
           <span className={`block w-5 h-0.5 bg-on-surface transition-all duration-300 origin-center ${mobileOpen ? "rotate-45 translate-y-[6.5px]" : ""}`} />
           <span className={`block w-5 h-0.5 bg-on-surface transition-all duration-300 ${mobileOpen ? "opacity-0 scale-x-0" : ""}`} />
@@ -148,15 +176,20 @@ export default function PortalSidebar({ role, userName, userEmail }: PortalSideb
       </div>
 
       {/* Mobile Drawer Overlay */}
-      {mobileOpen && (
-        <div
-          className="lg:hidden fixed inset-0 z-30 bg-black/30 backdrop-blur-sm"
-          onClick={() => setMobileOpen(false)}
-        />
-      )}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+            onClick={() => setMobileOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Mobile Drawer */}
-      <aside className={`lg:hidden fixed top-0 left-0 z-40 h-full w-72 bg-surface flex flex-col shadow-2xl transition-transform duration-300 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`lg:hidden fixed top-0 left-0 z-50 h-full w-72 bg-surface/95 backdrop-blur-2xl flex flex-col shadow-2xl transition-transform duration-300 border-r border-outline-variant/30 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <SidebarContent />
       </aside>
     </>

@@ -67,6 +67,33 @@
   --spacing-section-gap: 120px;
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -92,6 +119,30 @@
   .glass-panel {
     @apply bg-surface-container-lowest/70 backdrop-blur-xl border border-primary/10 shadow-[0_20px_40px_rgba(79,70,229,0.05)];
   }
+  
+  .card-interactive {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary/30;
+  }
+
+  .btn-tactile {
+    @apply transition-all duration-200 active:scale-95 active:shadow-inner hover:-translate-y-0.5 hover:shadow-md cursor-pointer;
+  }
+
+  .shimmer-skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(232, 232, 236, 0.6) 0%,
+      rgba(249, 249, 253, 0.9) 50%,
+      rgba(232, 232, 236, 0.6) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite ease-in-out;
+  }
+
+  .floating-element {
+    animation: float-subtle 4s ease-in-out infinite;
+  }
+
   .reveal-on-scroll {
     opacity: 0;
     transform: translateY(30px);
@@ -105,10 +156,10 @@
     transform: translateY(0);
   }
   .portal-link {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl font-sans text-sm font-semibold text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all duration-200;
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl font-sans text-sm font-semibold text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all duration-200 active:scale-98;
   }
   .portal-link-active {
-    @apply text-primary bg-primary/10;
+    @apply text-primary bg-primary/10 shadow-sm font-bold;
   }
 }
 
@@ -117,5 +168,11 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+  .shimmer-skeleton {
+    animation: none !important;
+  }
+  .floating-element {
+    animation: none !important;
   }
 }
