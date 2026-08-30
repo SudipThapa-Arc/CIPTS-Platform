@@ -11,7 +11,13 @@ export async function updateSession(request: NextRequest) {
 
   // Public routes that do not require authentication
   const isAuthRoute = pathname.startsWith('/auth')
-  const isPublicRoute = pathname === '/' || pathname.startsWith('/privacy') || pathname.startsWith('/terms') || isAuthRoute
+  const isKeepAliveRoute = pathname.startsWith('/api/keepalive')
+  const isPublicRoute =
+    pathname === '/' ||
+    pathname.startsWith('/privacy') ||
+    pathname.startsWith('/terms') ||
+    isAuthRoute ||
+    isKeepAliveRoute
 
   // Fast-path cookie check: If there are no Supabase auth cookies, skip remote network calls
   const allCookies = request.cookies.getAll()

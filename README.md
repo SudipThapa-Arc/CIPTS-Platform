@@ -58,5 +58,24 @@ CIPTS is an airy, intuitive ecosystem connecting visionary students with premier
 ## 🔐 Security & Auth
 This project leverages Supabase Authentication paired with Next.js Server Actions and Middleware. Ensure that your `.env.local` is never committed to version control. The `.gitignore` is pre-configured to exclude sensitive environment files.
 
+## ❤️ Supabase Keepalive
+
+To reduce Supabase inactivity shutdowns, this repo includes a scheduled workflow at `.github/workflows/supabase-keepalive.yml`.
+
+- Schedule: runs at `06:00 UTC` on **Monday and Thursday** (about twice per week).
+- Manual run: available via **Actions → Supabase Keepalive → Run workflow**.
+
+### Setup
+
+1. Deploy the app with `SUPABASE_KEEPALIVE_TOKEN` set (optional but recommended).
+2. In GitHub repository secrets, set:
+   - `SUPABASE_KEEPALIVE_URL`: full URL to the keepalive endpoint (example: `https://your-app.example.com/api/keepalive`)
+   - `SUPABASE_KEEPALIVE_TOKEN` (optional): same token value as the app `SUPABASE_KEEPALIVE_TOKEN` env var.
+3. The workflow pings the URL with `curl` and fails on non-2xx responses.
+
+The endpoint supports the token in header `x-keepalive-token` (or `?token=` query param). If no token env var is configured in the app, token checks are skipped.
+
+> Free-tier inactivity behavior can still vary over time based on Supabase/provider policy.
+
 ## 📄 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
