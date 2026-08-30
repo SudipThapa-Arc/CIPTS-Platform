@@ -44,6 +44,7 @@ CIPTS is an airy, intuitive ecosystem connecting visionary students with premier
    cp .env.example .env.local
    ```
    - Fill in your Supabase URL and Anon Key in `.env.local`.
+   - Set `CRON_SECRET` to a long random value and add the same value as an environment variable in your Vercel project settings.
 
 4. Initialize the Database:
    - Open your Supabase SQL Editor and run the provided `DATABASE_SCHEMA.sql` script to set up all tables, enums, and Row Level Security (RLS) policies.
@@ -54,6 +55,11 @@ CIPTS is an airy, intuitive ecosystem connecting visionary students with premier
    ```
 
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## ⏱️ Supabase Keepalive
+
+To prevent Supabase inactivity pause on free-tier projects, this app includes a Vercel Cron job (`vercel.json`) that calls `/api/supabase-keepalive` twice a week (Monday and Thursday).  
+The route validates `CRON_SECRET` and then sends a lightweight request to Supabase.
 
 ## 🔐 Security & Auth
 This project leverages Supabase Authentication paired with Next.js Server Actions and Middleware. Ensure that your `.env.local` is never committed to version control. The `.gitignore` is pre-configured to exclude sensitive environment files.
