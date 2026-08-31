@@ -79,7 +79,7 @@ export default async function StudentProfilePage() {
             <div className="p-3 bg-white rounded-xl shadow-sm"><TrendingUp className="w-5 h-5 text-emerald-600" /></div>
             <div>
               <div className="text-xs text-on-surface-variant uppercase tracking-wider font-semibold mb-1">Cumulative GPA</div>
-              <div className="font-mono font-medium text-lg text-emerald-700">{student.gpa.toFixed(2)}</div>
+              <div className="font-mono font-medium text-lg text-emerald-700">{(student.gpa ?? 0).toFixed(2)}</div>
             </div>
           </div>
 

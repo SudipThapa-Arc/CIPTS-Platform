@@ -93,13 +93,13 @@ export async function register(formData: FormData) {
       return { error: 'Roll number must be between 3 and 25 characters' }
     }
 
-    if (!department) {
+    if (!department || !(VALID_DEPARTMENTS as readonly string[]).includes(department)) {
       return { error: 'Please select a valid academic department' }
     }
 
     graduationYear = Number(graduationYearRaw)
-    if (isNaN(graduationYear) || graduationYear < 2020 || graduationYear > 2035) {
-      return { error: 'Please select a valid graduation year (2024 - 2030)' }
+    if (isNaN(graduationYear) || !(VALID_GRAD_YEARS as readonly number[]).includes(graduationYear)) {
+      return { error: 'Please select a valid graduation year (2024 – 2030)' }
     }
   }
 
@@ -109,8 +109,8 @@ export async function register(formData: FormData) {
       return { error: 'Please enter a valid company or organization name' }
     }
 
-    if (!industrySector) {
-      return { error: 'Please select an industry sector' }
+    if (!industrySector || !(VALID_SECTORS as readonly string[]).includes(industrySector)) {
+      return { error: 'Please select a valid industry sector' }
     }
 
     if (!contactPerson || contactPerson.length < 2) {

@@ -118,7 +118,7 @@ export default async function JobDetailsPage({ params }: { params: Promise<{ id:
           <div className="bg-surface glass-panel rounded-3xl p-8 lg:p-10 border border-outline-variant shadow-sm">
             <h2 className="font-display text-2xl mb-6 text-on-surface">Role Overview & Responsibilities</h2>
             <div className="prose prose-zinc max-w-none font-sans text-on-surface-variant leading-relaxed">
-              {job.job_description.split('\n').map((paragraph: string, i: number) => (
+              {(job.job_description || 'No description available.').split('\n').map((paragraph: string, i: number) => (
                 <p key={i} className="mb-4">{paragraph}</p>
               ))}
             </div>
