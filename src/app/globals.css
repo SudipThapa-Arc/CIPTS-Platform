@@ -95,23 +95,8 @@
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
   body {
     @apply bg-background text-on-surface font-sans antialiased selection:bg-primary-container selection:text-on-primary-container;
-    scrollbar-width: thin;
-    scrollbar-color: #c7c4d8 transparent;
-  }
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #c7c4d8;
-    border-radius: 3px;
   }
 }
 

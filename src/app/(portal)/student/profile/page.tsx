@@ -98,6 +98,8 @@ export default async function StudentProfilePage() {
         studentId={student.student_id} 
         initialSkills={student.skills || []} 
         initialResume={student.resume_url} 
+        initialGpa={student.gpa}
+        initialRollNumber={student.roll_number}
       />
 
     </div>
