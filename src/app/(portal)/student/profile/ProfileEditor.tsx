@@ -2,21 +2,34 @@
 
 import { useState, useRef } from 'react';
 import { updateStudentSkills, updateAcademicInfo, uploadResumeFile } from '@/app/actions/studentProfile';
-import { FileText, Link as LinkIcon, Plus, X, Upload, Save, CheckCircle2 } from 'lucide-react';
+import { FileText, Link as LinkIcon, Plus, X, Upload, Save, CheckCircle2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+const SUGGESTED_SKILLS: Record<string, string[]> = {
+  'Computer Science & Engineering': ['React', 'Node.js', 'Python', 'Java', 'C++', 'AWS', 'Docker', 'SQL', 'MongoDB'],
+  'Information Technology': ['React', 'Node.js', 'Python', 'Java', 'AWS', 'Cybersecurity', 'SQL', 'Networking'],
+  'Electronics & Communication (ECE)': ['C', 'C++', 'MATLAB', 'Verilog', 'VHDL', 'IoT', 'Embedded Systems', 'Python'],
+  'Electrical Engineering (EE)': ['MATLAB', 'AutoCAD', 'PLC', 'SCADA', 'Power Systems', 'Circuit Design'],
+  'Mechanical Engineering': ['AutoCAD', 'SolidWorks', 'ANSYS', 'MATLAB', 'CATIA', 'Thermodynamics'],
+  'Civil Engineering': ['AutoCAD', 'Revit', 'STAAD.Pro', 'ETABS', 'Surveying', 'Project Management'],
+  'Chemical Engineering': ['Process Design', 'Aspen HYSYS', 'MATLAB', 'Thermodynamics', 'Fluid Mechanics'],
+  'Business & Management (MBA/BBA)': ['Excel', 'Financial Modeling', 'Marketing Strategy', 'Project Management', 'Data Analysis', 'Tableau'],
+};
 
 export default function ProfileEditor({
   studentId,
   initialSkills = [],
   initialResume = '',
   initialGpa = 0,
-  initialRollNumber = ''
+  initialRollNumber = '',
+  department = ''
 }: {
   studentId: string;
   initialSkills: string[];
   initialResume: string | null;
   initialGpa?: number | null;
   initialRollNumber?: string;
+  department?: string;
 }) {
   const [skills, setSkills] = useState<string[]>(initialSkills || []);
   const [newSkill, setNewSkill] = useState('');
@@ -194,6 +207,32 @@ export default function ProfileEditor({
             ))
           )}
         </div>
+
+        {/* Suggested Skills */}
+        {department && SUGGESTED_SKILLS[department] && SUGGESTED_SKILLS[department].filter(s => !skills.includes(s)).length > 0 && (
+          <div className="mt-8 pt-6 border-t border-outline-variant/30">
+            <h3 className="text-sm font-bold text-on-surface-variant uppercase tracking-wider mb-4 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-primary" /> Suggested for {department}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {SUGGESTED_SKILLS[department]
+                .filter(s => !skills.includes(s))
+                .map(skill => (
+                  <button
+                    key={skill}
+                    onClick={async () => {
+                      const updatedSkills = [...skills, skill];
+                      setSkills(updatedSkills);
+                      await updateStudentSkills(studentId, updatedSkills);
+                    }}
+                    className="px-3 py-1.5 bg-surface-container hover:bg-primary/10 border border-outline-variant hover:border-primary/30 hover:text-primary rounded-lg text-sm font-mono font-medium transition-all flex items-center gap-1.5 text-on-surface-variant"
+                  >
+                    <Plus className="w-3 h-3" /> {skill}
+                  </button>
+                ))}
+            </div>
+          </div>
+        )}
       </div>
 
     </div>
